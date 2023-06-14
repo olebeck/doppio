@@ -340,7 +340,7 @@ export = JVMTypes;\n`, () => {});
         injectedFields = cls.getInjectedFields(),
         injectedMethods = cls.getInjectedMethods(),
         injectedStaticMethods = cls.getInjectedStaticMethods();
-      printEraseableLine(`[${this.headerCount++}] Processing header for ${descriptor2typestr(desc)}...`);
+        printEraseableLine(`[${this.headerCount++}] Processing header for ${descriptor2typestr(desc)}...`);
 
       if (cls.accessFlags.isInterface()) {
         // Interfaces map to TypeScript interfaces.
@@ -694,7 +694,9 @@ ClasspathFactory(JAVA_HOME, classpathPaths, (items: IClasspathItem[]) => {
         template.fileEnd(stream);
         stream.end(new Buffer(''), () => {});
         if (args.flag('typescript', false) && args.flag('headers_only', false)) {
-          fs.unlinkSync(path.join(outputDirectory, targetName + '.' + template.getExtension()));
+          try {
+            fs.unlinkSync(path.join(outputDirectory, targetName + '.' + template.getExtension()));
+          } catch(e) {}
         }
       });
       if (args.flag('typescript', false)) {
